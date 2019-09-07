@@ -252,7 +252,7 @@ python Object_detection_video.py
 press ```q``` to exit video and open next video
 
 ### 24.3 Test with Webcam
-Open ```Object_detection_video.py``` and set ```NUM_CLASSES```
+Open ```Object_detection_webcam.py``` and set ```NUM_CLASSES```
 Run the following command
 ```
 python Object_detection_webcam.py
