@@ -222,14 +222,16 @@ Go to ```models/research/object_detection/training``` directory and find the hig
 </p>
 
 When the train complete (loss amount is nearly 0) goto ```object_detection``` folder and run the command
-Replace ```<higest-number>``` with number you found in ```models/research/object_detection/training``` directory (in mine 177515)
+Replace ```<higest-number>``` with number you found in ```models/research/object_detection/training``` directory (mine 177515)
 
 ```
 python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/<your-tensorflow-zoo model>.config --trained_checkpoint_prefix training/model.ckpt-<higest-number> --output_directory inference_graph
 ```
 ## 24. See your result
+
+### 24.1 Test with images
 Now open ```Object_detection_image.py``` with text editor and replace ```NUM_CLASSES``` with your classes number
-Then create folder name ```test``` in ```object_detection``` and copy image you want to test your object Detection
+Then create folder name ```test_img``` in ```object_detection``` and copy images you want to test your object Detection
 Run the following command
 ```
 python Object_detection_image.py
@@ -240,6 +242,12 @@ press ```q``` to exit image and open next image
   <img src="doc/result.png">
 </p>
 
+### 24.2 Test with videos
+Open ```Object_detection_video.py``` and set ```NUM_CLASSES```
+create folder name ```test_video``` in ```object_detection``` and copy videos you want to test your object Detection
+press ```q``` to exit image and open next video
+
+### 24.3 Test with Webcam
 you can run ```python Object_detection_webcam.py``` to use your webcam to detect object or ```python Object_detection_video.py``` to use video (make sure to set the ```NUM_CLASSES```)
 
 ## License & copyright

@@ -18,6 +18,7 @@
 
 """
 THIS FILE WRITTEN BY https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
+in addition to some edits
 """
 
 # Import packages
@@ -49,7 +50,7 @@ PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,'frozen_inference_graph.pb')
 PATH_TO_LABELS = os.path.join(CWD_PATH,'training','labelmap.pbtxt')
 
 # Path to video
-PATH_TO_VIDEO = os.path.join(CWD_PATH,VIDEO_NAME)
+PATH_TO_VIDEOS = [os.path.join(CWD_PATH, 'test_video', v )for v in os.listdir(os.path.abspath('test_video')) if v.endswith('.mov') or v.endswith('.mp4') or v.endswith('.mkv')]
 
 # Number of classes the object detector can identify
 NUM_CLASSES = 6
@@ -91,39 +92,41 @@ detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
 # Number of objects detected
 num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
-# Open video file
-video = cv2.VideoCapture(PATH_TO_VIDEO)
 
-while(video.isOpened()):
+for v in PATH_TO_VIDEOS:
+    # Open video file
+    video = cv2.VideoCapture(v)
 
-    # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
-    # i.e. a single-column array, where each item in the column has the pixel RGB value
-    ret, frame = video.read()
-    frame_expanded = np.expand_dims(frame, axis=0)
+    while(video.isOpened()):
 
-    # Perform the actual detection by running the model with the image as input
-    (boxes, scores, classes, num) = sess.run(
-        [detection_boxes, detection_scores, detection_classes, num_detections],
-        feed_dict={image_tensor: frame_expanded})
+        # Acquire frame and expand frame dimensions to have shape: [1, None, None, 3]
+        # i.e. a single-column array, where each item in the column has the pixel RGB value
+        ret, frame = video.read()
+        frame_expanded = np.expand_dims(frame, axis=0)
 
-    # Draw the results of the detection (aka 'visulaize the results')
-    vis_util.visualize_boxes_and_labels_on_image_array(
-        frame,
-        np.squeeze(boxes),
-        np.squeeze(classes).astype(np.int32),
-        np.squeeze(scores),
-        category_index,
-        use_normalized_coordinates=True,
-        line_thickness=8,
-        min_score_thresh=0.60)
+        # Perform the actual detection by running the model with the image as input
+        (boxes, scores, classes, num) = sess.run(
+            [detection_boxes, detection_scores, detection_classes, num_detections],
+            feed_dict={image_tensor: frame_expanded})
 
-    # All the results have been drawn on the frame, so it's time to display it.
-    cv2.imshow('Object detector', frame)
+        # Draw the results of the detection (aka 'visulaize the results')
+        vis_util.visualize_boxes_and_labels_on_image_array(
+            frame,
+            np.squeeze(boxes),
+            np.squeeze(classes).astype(np.int32),
+            np.squeeze(scores),
+            category_index,
+            use_normalized_coordinates=True,
+            line_thickness=8,
+            min_score_thresh=0.60)
 
-    # Press 'q' to quit
-    if cv2.waitKey(1) == ord('q'):
-        break
+        # All the results have been drawn on the frame, so it's time to display it.
+        cv2.imshow('Object detector', frame)
 
-# Clean up
-video.release()
-cv2.destroyAllWindows()
+        # Press 'q' to quit
+        if cv2.waitKey(1) == ord('q'):
+            break
+
+    # Clean up
+    video.release()
+    cv2.destroyAllWindows()
