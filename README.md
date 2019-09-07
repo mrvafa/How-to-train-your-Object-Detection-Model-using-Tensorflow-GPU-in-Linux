@@ -231,7 +231,7 @@ python export_inference_graph.py --input_type image_tensor --pipeline_config_pat
 
 ### 24.1 Test with images
 Now open ```Object_detection_image.py``` with text editor and replace ```NUM_CLASSES``` with your classes number
-Then create folder name ```test_img``` in ```object_detection``` and copy images you want to test your object Detection
+Then create folder name ```test_img``` in ```object_detection``` and copy images you want to test your Object Detection
 Run the following command
 ```
 python Object_detection_image.py
@@ -244,11 +244,20 @@ press ```q``` to exit image and open next image
 
 ### 24.2 Test with videos
 Open ```Object_detection_video.py``` and set ```NUM_CLASSES```
-create folder name ```test_video``` in ```object_detection``` and copy videos you want to test your object Detection
-press ```q``` to exit image and open next video
+create folder name ```test_video``` directory in ```object_detection``` and copy videos you want to test your Object Detection
+Run the following command
+```
+python Object_detection_video.py
+```
+press ```q``` to exit video and open next video
 
 ### 24.3 Test with Webcam
-you can run ```python Object_detection_webcam.py``` to use your webcam to detect object or ```python Object_detection_video.py``` to use video (make sure to set the ```NUM_CLASSES```)
+Open ```Object_detection_video.py``` and set ```NUM_CLASSES```
+Run the following command
+```
+python Object_detection_webcam.py
+```
+press ```q``` to exit
 
 ## License & copyright
 © MRVAFA
